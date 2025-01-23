@@ -1,0 +1,1 @@
+Attempting to click on element: [[ChromeDriver: chrome on windows (6184fb177d5aada3ed7a9b89e3084f08)] -> name: username]

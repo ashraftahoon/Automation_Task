@@ -1,0 +1,4 @@
+Test Case Failed: setUp
+Class: tests.TestBase
+Error Message: Login failed. User is not on the Dashboard page. expected [true] but found [false]
+ARIA Snapshot: Failed to capture ARIA snapshot: Cannot invoke "org.openqa.selenium.JavascriptExecutor.executeScript(String, Object[])" because "js" is null
