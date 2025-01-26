@@ -31,7 +31,7 @@ public class TestBase {
         browserActions = new BrowserActions(driver);
         configPropReader = new ConfigPropReader("src/main/resources/config.properties");
         String url = configPropReader.getProperty("baseUrl");
-        TestFailureHandler.setWebDriver(driver); // Ensure WebDriver is set before any test method
+        TestFailureHandler.setWebDriver(driver); // dEnsure WebDriver is set before any test method
         wait = new WaitUtility(driver);
         wait.setImplicitWait();
         browserActions.navigateToURL(url);
@@ -40,7 +40,7 @@ public class TestBase {
         elementActions.typeText(driver.findElement(By.name("username")), "Admin");
         elementActions.typeText(driver.findElement(By.name("password")), "admin123");
         elementActions.click(driver.findElement(By.cssSelector(".orangehrm-login-button")));
-        Assert.assertTrue(driver.findElement(By.cssSelector(".oxd-topbar-body-nav")).getText().equals("Dashboard"), "Login failed. User is not on the Dashboard page.");
+        Assert.assertTrue(driver.findElement(By.cssSelector(".oxd-topbar-body-nav")).getText().equals("Dashboard"), "Login0 failed. User is not on the Dashboard page.");
 
     }
 }
