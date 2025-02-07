@@ -1,22 +1,22 @@
 package configReader;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigPropReader {
-    private Properties properties;
+    private final Properties properties;
 
     public  ConfigPropReader(String filePath) {
-
+        // initialize properties object
+        properties = new Properties();
         try {
             // create file input stream to read properties from the file
             FileInputStream fileInputStream = new FileInputStream(filePath);
-            // initialize properties object
-            properties = new Properties();
             //load properties from file
             properties.load(fileInputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load configuration file: " + filePath, e);
         }
     }
 

@@ -45,24 +45,19 @@ public class JsonDataReader {
             Object parsedData = jsonParser.parse(reader);
 
             // If the root object is an array
-            if (parsedData instanceof JSONArray) {
-                JSONArray jsonArray = (JSONArray) parsedData;
+            if (parsedData instanceof JSONArray jsonArray) {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     jsonDataCache.put("object" + i, parseObject(jsonObject));
                 }
             }
             // If the root object is a JSONObject (key-value pairs)
-            else if (parsedData instanceof JSONObject) {
-                JSONObject jsonObject = (JSONObject) parsedData;
+            else if (parsedData instanceof JSONObject jsonObject) {
                 jsonDataCache.put("root", parseObject(jsonObject));
             } else {
                 throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN,
                         "Unexpected root element, expected JSONObject or JSONArray.");
             }
-        } catch (IOException | ParseException e) {
-            // Catch specific exceptions and rethrow them for further handling
-            throw e;
         }
     }
 

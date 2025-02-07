@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 public class BrowserActions {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public BrowserActions(WebDriver driver) {
         this.driver = driver;
@@ -20,6 +20,14 @@ public class BrowserActions {
 
     public void refreshPage() {
         driver.navigate().refresh();
+    }
+
+    public String getPagTitle() {
+        return driver.getTitle();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 
     public void closeBrowser() {

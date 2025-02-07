@@ -1,22 +1,13 @@
 package tests;
 
 import configReader.ConfigPropReader;
-import factory.WebDriverFactory;
-import io.qameta.allure.Attachment;
-import org.json.simple.parser.ParseException;
+import drivers.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import utilities.*;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.time.Duration;
 
 public class TestBase {
     public BrowserActions browserActions;
@@ -24,22 +15,22 @@ public class TestBase {
     public ElementActions elementActions;
     public WaitUtility wait;
     public WebDriver driver;
-
+    public Scrolling scrolling;
     @Test
     public void setUp() {
-        driver = WebDriverFactory.getDriver();
+
+        driver = DriverManager.createInstance();
         browserActions = new BrowserActions(driver);
         configPropReader = new ConfigPropReader("src/main/resources/config.properties");
         String url = configPropReader.getProperty("baseUrl");
-        TestFailureHandler.setWebDriver(driver); // dEnsure WebDriver is set before any test method
-        wait = new WaitUtility(driver);
-        wait.setImplicitWait();
         browserActions.navigateToURL(url);
         browserActions.maximizeWindow();
+        scrolling= new Scrolling(driver);
         elementActions = new ElementActions(driver);
-        elementActions.typeText(driver.findElement(By.name("username")), "Admin");
-        elementActions.typeText(driver.findElement(By.name("password")), "admin123");
-        elementActions.click(driver.findElement(By.cssSelector(".orangehrm-login-button")));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));  // waits 10 seconds for elements to be present
+        elementActions.typeText(By.name("username"), "Admin");
+        elementActions.typeText(By.name("password"), "admin123");
+        elementActions.click(By.cssSelector(".orangehrm-login-button"));
         Assert.assertTrue(driver.findElement(By.cssSelector(".oxd-topbar-body-nav")).getText().equals("Dashboard"), "Login0 failed. User is not on the Dashboard page.");
 
     }

@@ -4,12 +4,10 @@ import configReader.ConfigPropReader;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
-import java.util.logging.Logger;
-
 public class RetryAnalyzer implements IRetryAnalyzer {
     private int retryCount = 0;
-    private int maxRetryCount;
-    private boolean retryFailedTests;
+    private final int maxRetryCount;
+    private final boolean retryFailedTests;
 
     public RetryAnalyzer() {
         // Read maxRetries from the properties file

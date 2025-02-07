@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
 import java.io.ByteArrayInputStream;
 import java.time.Duration;
 import java.util.logging.Logger;
@@ -21,16 +22,7 @@ public class TestFailureHandler implements ITestListener {
     private static final Logger logger = Logger.getLogger(TestFailureHandler.class.getName());
 
     // ThreadLocal WebDriver for parallel execution
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-
-    /**
-     * Sets the WebDriver instance for the current thread.
-     *
-     * @param webDriver WebDriver instance to set.
-     */
-    public static void setWebDriver(WebDriver webDriver) {
-        driver.set(webDriver);
-    }
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     /**
      * Retrieves the WebDriver instance for the current thread.
@@ -39,6 +31,15 @@ public class TestFailureHandler implements ITestListener {
      */
     private static WebDriver getWebDriver() {
         return driver.get();
+    }
+
+    /**
+     * Sets the WebDriver instance for the current thread.
+     *
+     * @param webDriver WebDriver instance to set.
+     */
+    public static void setWebDriver(WebDriver webDriver) {
+        driver.set(webDriver);
     }
 
     /**
@@ -144,20 +145,26 @@ public class TestFailureHandler implements ITestListener {
     }
 
     @Override
-    public void onTestStart(ITestResult result) {}
+    public void onTestStart(ITestResult result) {
+    }
 
     @Override
-    public void onTestSuccess(ITestResult result) {}
+    public void onTestSuccess(ITestResult result) {
+    }
 
     @Override
-    public void onTestSkipped(ITestResult result) {}
+    public void onTestSkipped(ITestResult result) {
+    }
 
     @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {}
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+    }
 
     @Override
-    public void onStart(ITestContext context) {}
+    public void onStart(ITestContext context) {
+    }
 
     @Override
-    public void onFinish(ITestContext context) {}
+    public void onFinish(ITestContext context) {
+    }
 }

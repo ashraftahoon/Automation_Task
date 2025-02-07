@@ -19,11 +19,9 @@ import static com.google.gson.JsonParser.parseString;
 public class NetworkInterceptor {
     public WebDriver driver;
     public DevTools devTools;
-    private String specificUrl;
 
     public NetworkInterceptor(WebDriver driver,String specificUrl) {
         this.driver = driver;
-        this.specificUrl=specificUrl;
         initializeDevTools();
     }
 
