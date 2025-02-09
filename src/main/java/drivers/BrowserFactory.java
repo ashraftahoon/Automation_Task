@@ -7,16 +7,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.URL;
-import java.util.logging.Logger;
 
 public class BrowserFactory {
 
     private static final String CONFIG_FILE_PATH = "src/main/resources/config.properties";
     private static final ConfigPropReader configPropReader = new ConfigPropReader(CONFIG_FILE_PATH);
-    private static final Logger logger = Logger.getLogger(BrowserFactory.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(BrowserFactory.class);
 
     private BrowserFactory() {
         // Private constructor to prevent instantiation
@@ -35,7 +35,7 @@ public class BrowserFactory {
                 default -> throw new IllegalArgumentException("Unsupported execution mode: " + executionMode);
             };
         } catch (Exception e) {
-            logger.severe("Error initializing WebDriver: " + e.getMessage());
+            logger.error("Error initializing WebDriver: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to initialize WebDriver", e);
         }
     }
@@ -67,6 +67,7 @@ public class BrowserFactory {
         if (Boolean.parseBoolean(configPropReader.getProperty("chromeHeadless"))) {
             chromeOptions.addArguments("--headless");
         }
+        logger.info("Initializing ChromeDriver with options: {}", chromeOptions);
         return new ChromeDriver(chromeOptions);
     }
 
@@ -74,9 +75,10 @@ public class BrowserFactory {
         String REMOTE_SERVER_URL = "http://remote-server-url:4444/wd/hub";
         try {
             URL remoteUrl = URI.create(REMOTE_SERVER_URL).toURL();
+            logger.info("Initializing Remote WebDriver");
             return new RemoteWebDriver(remoteUrl, new ChromeOptions());
         } catch (Exception e) {
-            logger.severe("Error setting up remote WebDriver: " + e.getMessage());
+            logger.error("Error setting up remote WebDriver: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to initialize Remote WebDriver", e);
         }
     }
@@ -85,9 +87,10 @@ public class BrowserFactory {
         try {
             String gridHubUrl = configPropReader.getProperty("gridHubUrl");
             URL remoteUrl = URI.create(gridHubUrl).toURL();
+            logger.info("Initializing Grid WebDriver with hub URL: {}", gridHubUrl);
             return new RemoteWebDriver(remoteUrl, new ChromeOptions());
         } catch (Exception e) {
-            logger.severe("Error setting up Grid WebDriver: " + e.getMessage());
+            logger.error("Error setting up Grid WebDriver: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to initialize Grid WebDriver", e);
         }
     }
@@ -103,7 +106,7 @@ public class BrowserFactory {
             URL remoteUrl = URI.create(cloudUrl).toURL();
             return new RemoteWebDriver(remoteUrl, caps);
         } catch (Exception e) {
-            logger.severe("Error setting up Cloud WebDriver: " + e.getMessage());
+            logger.error("Error setting up Cloud WebDriver: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to initialize Cloud WebDriver", e);
         }
     }

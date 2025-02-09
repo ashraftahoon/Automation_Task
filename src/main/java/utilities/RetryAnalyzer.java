@@ -3,43 +3,80 @@ package utilities;
 import configReader.ConfigPropReader;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RetryAnalyzer implements IRetryAnalyzer {
+    private static final Logger logger = LoggerFactory.getLogger(RetryAnalyzer.class);
+
     private int retryCount = 0;
     private final int maxRetryCount;
     private final boolean retryFailedTests;
 
     public RetryAnalyzer() {
-        // Read maxRetries from the properties file
+        // Read configuration properties
         ConfigPropReader configPropReader = new ConfigPropReader("src/main/resources/config.properties");
-        maxRetryCount = Integer.parseInt(configPropReader.getProperty("maxRetries"));
-        retryFailedTests = Boolean.parseBoolean(configPropReader.getProperty("retryFailedTests"));
+        maxRetryCount = getMaxRetryCount(configPropReader);
+        retryFailedTests = isRetryFailedTestsEnabled(configPropReader);
 
+        logger.info("Initialized RetryAnalyzer with maxRetryCount: {} and retryFailedTests: {}", maxRetryCount, retryFailedTests);
     }
 
     @Override
     public boolean retry(ITestResult result) {
-        // Check if retrying is enabled before applying retry logic
-        if (retryFailedTests) {
-            // Log failed test case details if the test failed
-            if (result.getStatus() == ITestResult.FAILURE) {
-                logFailedTest(result);
-            }
+        if (retryFailedTests && result.getStatus() == ITestResult.FAILURE) {
+            logFailedTest(result);
 
-            // Retry the test if retry count is less than max retry count
-            if (retryCount < maxRetryCount) {
+            if (shouldRetry(result)) {
                 retryCount++;
-                return true; // Retry the test
+                logger.info("Retrying test '{}' (Retry {}/{})", result.getName(), retryCount, maxRetryCount);
+                return true;
+            } else {
+                logger.info("Max retry count reached for test '{}'. Not retrying further.", result.getName());
             }
+        } else {
+            logger.info("Retrying failed tests is disabled by configuration or test did not fail.");
         }
-        return false; // Don't retry if retryFailedTests is false or after max retries
+        return false;
+    }
+
+    private boolean shouldRetry(ITestResult result) {
+        // Custom retry logic can be added here based on the type of failure
+        return retryCount < maxRetryCount;
     }
 
     private void logFailedTest(ITestResult result) {
         String testName = result.getName();
-        String failureReason = result.getThrowable() != null ? result.getThrowable().getMessage() : "No exception";
-        // Log the failure details to the console
-        System.out.println("Test Failed: " + testName);
-        System.out.println("Failure Reason: " + failureReason);
+        Throwable throwable = result.getThrowable();
+        String failureReason = throwable != null ? throwable.getMessage() : "No exception";
+        String stackTrace = throwable != null ? getStackTraceAsString(throwable) : "No stack trace";
+
+        logger.error("Test Failed: '{}'. Failure Reason: {}\nStack Trace:\n{}", testName, failureReason, stackTrace);
+    }
+
+    private String getStackTraceAsString(Throwable throwable) {
+        StringBuilder stackTrace = new StringBuilder();
+        for (StackTraceElement element : throwable.getStackTrace()) {
+            stackTrace.append(element.toString()).append("\n");
+        }
+        return stackTrace.toString();
+    }
+
+    private int getMaxRetryCount(ConfigPropReader configPropReader) {
+        try {
+            return Integer.parseInt(configPropReader.getProperty("maxRetries"));
+        } catch (NumberFormatException e) {
+            logger.error("Invalid maxRetries value in configuration. Using default value of 1.", e);
+            return 1; // Default value
+        }
+    }
+
+    private boolean isRetryFailedTestsEnabled(ConfigPropReader configPropReader) {
+        try {
+            return Boolean.parseBoolean(configPropReader.getProperty("retryFailedTests"));
+        } catch (Exception e) {
+            logger.error("Invalid retryFailedTests value in configuration. Using default value of false.", e);
+            return false; // Default value
+        }
     }
 }
