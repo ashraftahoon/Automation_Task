@@ -1,1 +1,0 @@
-Attempting to click on element: [[ChromeDriver: chrome on windows (91266abfb9c210666ba9a5a8254b9f46)] -> name: password]

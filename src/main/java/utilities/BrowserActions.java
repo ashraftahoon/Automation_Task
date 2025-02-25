@@ -1,5 +1,6 @@
 package utilities;
 
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,24 +15,58 @@ public class BrowserActions {
         logger.info("Initialized BrowserActions with WebDriver: {}", driver);
     }
 
-    public void navigateToURL(String url) {
+    public BrowserActions navigateToURL(String url) {
         logger.info("Navigating to URL: {}", url);
         driver.get(url);
         logger.debug("Navigation complete. Current URL: {}", driver.getCurrentUrl());
+        return this;
     }
 
-    public void maximizeWindow() {
+    public BrowserActions maximizeWindow() {
         logger.info("Maximizing browser window.");
         driver.manage().window().maximize();
         logger.debug("Browser window maximized.");
+        return this;
     }
 
-    public void refreshPage() {
+    public BrowserActions refreshPage() {
         logger.info("Refreshing the page.");
         driver.navigate().refresh();
         logger.debug("Page refreshed.");
+        return this;
+    }
+    public BrowserActions navigateForward() {
+        driver.navigate().forward();
+        return this;
     }
 
+    public BrowserActions navigateBack() {
+        driver.navigate().back();
+        return this;
+    }
+
+    /***************************  Cookies  ***********************************/
+
+    public BrowserActions addCookie(Cookie cookie) {
+        driver.manage().addCookie(cookie);
+        return this;
+    }
+
+
+    public BrowserActions deleteCookie(Cookie cookie) {
+        driver.manage().deleteCookie(cookie);
+        return this;
+    }
+
+    public BrowserActions deleteCookieWithName(String cookieName) {
+        driver.manage().deleteCookieNamed(cookieName);
+        return this;
+    }
+
+    public BrowserActions deleteAllCookies() {
+        driver.manage().deleteAllCookies();
+        return this;
+    }
     public String getPagTitle() {
         String title = driver.getTitle();
         logger.info("Retrieved page title: {}", title);
@@ -44,9 +79,9 @@ public class BrowserActions {
         return currentUrl;
     }
 
-    public void closeBrowser() {
-        logger.info("Closing the browser.");
+    public BrowserActions closeBrowser() {
         driver.quit();
-        logger.debug("Browser closed successfully.");
+        logger.info("Browser closed successfully.");
+        return this;
     }
 }

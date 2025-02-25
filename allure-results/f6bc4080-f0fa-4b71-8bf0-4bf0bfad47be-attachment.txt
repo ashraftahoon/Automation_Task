@@ -1,1 +1,0 @@
-Successfully clicked on element: [[ChromeDriver: chrome on windows (6d3dd2c8d2b4d9e5460ca1e844dcf0b4)] -> css selector: .orangehrm-login-button]

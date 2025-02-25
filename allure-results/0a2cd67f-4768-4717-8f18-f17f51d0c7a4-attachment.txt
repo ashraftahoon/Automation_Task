@@ -1,1 +1,0 @@
-Successfully typed text 'username' into element: [[ChromeDriver: chrome on windows (afc3dd3a58ceac0b31aa5524f66fab19)] -> name: password]
