@@ -1,6 +1,5 @@
 package utilities;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -203,18 +202,22 @@ public class ElementActions {
     }
 
 
+    // Get text of an element using its locator
     public String getTextOf(By locator) {
         return findElement(locator).getText();
     }
 
+    // Get attribute value of an element using its locator
     public Boolean isDisplayed(By locator) {
         return findElement(locator).isDisplayed();
     }
 
+    // Get attribute value of an element using its locator
     public Boolean isSelected(By locator) {
         return findElement(locator).isSelected();
     }
 
+    // Get attribute value of an element using its locator
     public Boolean isClickable(By locator) {
         return findElement(locator).isEnabled();
     }
@@ -236,15 +239,6 @@ public class ElementActions {
         }
     }
 
-    // Helper method to log info in Allure
-    private static void logInfo(String message) {
-        Allure.addAttachment("Info Log", message); // Attach info to Allure report
-    }
-
-    // Helper method to log error in Allure
-    private static void logError(String message, Exception e) {
-        Allure.addAttachment("Error Log", message + "\n" + e.getMessage()); // Attach error to Allure report
-    }
 
     // Find an element using a locator
     public WebElement findElement(By locator) {

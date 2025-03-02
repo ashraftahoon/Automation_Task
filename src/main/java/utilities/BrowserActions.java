@@ -15,6 +15,7 @@ public class BrowserActions {
         logger.info("Initialized BrowserActions with WebDriver: {}", driver);
     }
 
+    // Browser actions
     public BrowserActions navigateToURL(String url) {
         logger.info("Navigating to URL: {}", url);
         driver.get(url);
@@ -22,24 +23,28 @@ public class BrowserActions {
         return this;
     }
 
-    public BrowserActions maximizeWindow() {
+    //  Maximize the browser window
+    public void maximizeWindow() {
         logger.info("Maximizing browser window.");
         driver.manage().window().maximize();
         logger.debug("Browser window maximized.");
-        return this;
     }
 
+
+    // Refresh the page
     public BrowserActions refreshPage() {
         logger.info("Refreshing the page.");
         driver.navigate().refresh();
         logger.debug("Page refreshed.");
         return this;
     }
+    // Navigate forward
     public BrowserActions navigateForward() {
         driver.navigate().forward();
         return this;
     }
 
+    //
     public BrowserActions navigateBack() {
         driver.navigate().back();
         return this;

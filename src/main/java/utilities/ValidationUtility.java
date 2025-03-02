@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 public class ValidationUtility {
 
     private static final Logger logger = LoggerFactory.getLogger(ValidationUtility.class);
+    private static final SoftAssert softAssert = new SoftAssert();
 
     // Private constructor to prevent instantiation
     private ValidationUtility() {
@@ -49,7 +50,7 @@ public class ValidationUtility {
     /**
      * Soft Assertion: Collects failure if actual != expected.
      */
-    public static void softAssertEquals(SoftAssert softAssert, String actual, String expected, String message) {
+    public static void softAssertEquals(String actual, String expected, String message) {
         logger.info("Soft Assertion: Validating if '{}' equals '{}'", actual, expected);
         softAssert.assertEquals(actual, expected, message);
     }
@@ -57,7 +58,7 @@ public class ValidationUtility {
     /**
      * Soft Assertion: Collects failure if element is not displayed.
      */
-    public static void softAssertElementDisplayed(SoftAssert softAssert, WebElement element, String message) {
+    public static void softAssertElementDisplayed(WebElement element, String message) {
         logger.info("Soft Assertion: Validating if element is displayed.");
         softAssert.assertTrue(element.isDisplayed(), message);
     }
@@ -93,5 +94,18 @@ public class ValidationUtility {
         } else {
             logger.error("Validation FAILED: {}", successMessage);
         }
+    }
+
+    ///////////////////////////////////////////////////
+    // Assert All Functionality
+    ///////////////////////////////////////////////////
+
+    /**
+     * Asserts all collected soft assertions.
+     * This should be called at the end of the test execution.
+     */
+    public static void assertAll() {
+        logger.info("Asserting all soft assertions.");
+        softAssert.assertAll();
     }
 }

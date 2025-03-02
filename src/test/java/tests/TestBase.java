@@ -27,9 +27,10 @@ public class TestBase {
         browserActions.maximizeWindow();
         scrolling= new Scrolling(driver);
         elementActions = new ElementActions(driver);
+        JsonDataReader testdata = new JsonDataReader("test-data");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));  // waits 10 seconds for elements to be present
-        elementActions.typeText(By.name("username"), "Admin");
-        elementActions.typeText(By.name("password"), "admin123");
+        elementActions.typeText(By.name("username"), testdata.getJsonData("login-credentials.username"));
+        elementActions.typeText(By.name("password"), testdata.getJsonData("login-credentials.password"));
         elementActions.click(By.cssSelector(".orangehrm-login-button"));
         Assert.assertTrue(driver.findElement(By.cssSelector(".oxd-topbar-body-nav")).getText().equals("Dashboard"), "Login0 failed. User is not on the Dashboard page.");
 

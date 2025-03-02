@@ -1,7 +1,6 @@
 package utilities;
 
 import configReader.ConfigPropReader;
-import org.openqa.selenium.WebDriver;
 import org.testng.IAlterSuiteListener;
 import org.testng.IExecutionListener;
 import org.testng.ITestListener;
@@ -12,11 +11,13 @@ public class TestNGListeners implements ITestListener, IExecutionListener, IAlte
     private static final String CONFIG_FILE_PATH = "src/main/resources/allure.properties";
     private final ConfigPropReader configPropReader;
 
+    // Constructor to initialize the ConfigPropReader
     public TestNGListeners() {
         this.configPropReader = new ConfigPropReader(CONFIG_FILE_PATH);
     }
 
 
+    //  Clean Allure report before execution
     @Override
     public void onExecutionStart() {
         System.out.println("**************** Welcome to Selenium Framework *****************");
@@ -26,6 +27,7 @@ public class TestNGListeners implements ITestListener, IExecutionListener, IAlte
         }
     }
 
+    //      Generate Allure report after execution
     @Override
     public void onExecutionFinish() {
         System.out.println("Generating Report........");
@@ -39,4 +41,6 @@ public class TestNGListeners implements ITestListener, IExecutionListener, IAlte
         }
         System.out.println("********************* End of Execution *********************");
     }
+
+
 }

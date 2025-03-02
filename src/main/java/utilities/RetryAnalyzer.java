@@ -13,6 +13,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
     private final int maxRetryCount;
     private final boolean retryFailedTests;
 
+    // Constructor to initialize the RetryAnalyzer
     public RetryAnalyzer() {
         // Read configuration properties
         ConfigPropReader configPropReader = new ConfigPropReader("src/main/resources/config.properties");
@@ -22,6 +23,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         logger.info("Initialized RetryAnalyzer with maxRetryCount: {} and retryFailedTests: {}", maxRetryCount, retryFailedTests);
     }
 
+    // Retry failed tests
     @Override
     public boolean retry(ITestResult result) {
         if (retryFailedTests && result.getStatus() == ITestResult.FAILURE) {
@@ -45,15 +47,16 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         return retryCount < maxRetryCount;
     }
 
+    // Log failed test details
     private void logFailedTest(ITestResult result) {
         String testName = result.getName();
         Throwable throwable = result.getThrowable();
         String failureReason = throwable != null ? throwable.getMessage() : "No exception";
         String stackTrace = throwable != null ? getStackTraceAsString(throwable) : "No stack trace";
-
         logger.error("Test Failed: '{}'. Failure Reason: {}\nStack Trace:\n{}", testName, failureReason, stackTrace);
     }
 
+    // Get the stack trace as a string
     private String getStackTraceAsString(Throwable throwable) {
         StringBuilder stackTrace = new StringBuilder();
         for (StackTraceElement element : throwable.getStackTrace()) {
@@ -62,6 +65,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         return stackTrace.toString();
     }
 
+    // Get the max retry count from configuration
     private int getMaxRetryCount(ConfigPropReader configPropReader) {
         try {
             return Integer.parseInt(configPropReader.getProperty("maxRetries"));
@@ -71,6 +75,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         }
     }
 
+    // Check if retrying failed tests is enabled
     private boolean isRetryFailedTestsEnabled(ConfigPropReader configPropReader) {
         try {
             return Boolean.parseBoolean(configPropReader.getProperty("retryFailedTests"));
