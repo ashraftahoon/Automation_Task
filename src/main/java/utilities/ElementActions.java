@@ -1,5 +1,6 @@
 package utilities;
 
+import drivers.DriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -17,10 +18,10 @@ public class ElementActions {
     private static final Logger logger = LoggerFactory.getLogger(ElementActions.class);
 
     // Constructor with only WebDriver (reducing unnecessary dependencies)
-    public ElementActions(WebDriver driver) {
-        this.driver = driver;
-        this.waitUtility = new WaitUtility(driver); // Create instance inside the class
-        this.scrolling = new Scrolling(driver);     // Create instance inside the class
+    public ElementActions() {
+        this.driver = DriverManager.getDriver();
+        this.waitUtility = new WaitUtility(); // Create instance inside the class
+        this.scrolling = new Scrolling();     // Create instance inside the class
     }
 
     // Click on an element using its locator

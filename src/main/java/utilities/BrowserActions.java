@@ -1,5 +1,6 @@
 package utilities;
 
+import drivers.DriverManager;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -10,8 +11,8 @@ public class BrowserActions {
     private final WebDriver driver;
     private static final Logger logger = LoggerFactory.getLogger(BrowserActions.class);
 
-    public BrowserActions(WebDriver driver) {
-        this.driver = driver;
+    public BrowserActions() {
+        this.driver = DriverManager.getDriver();
         logger.info("Initialized BrowserActions with WebDriver: {}", driver);
     }
 

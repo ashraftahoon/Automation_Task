@@ -1,13 +1,12 @@
 package utilities;
 
 import configReader.ConfigPropReader;
-import org.testng.IAlterSuiteListener;
-import org.testng.IExecutionListener;
-import org.testng.ITestListener;
+import org.testng.*;
+import org.testng.internal.invokers.InvokedMethod;
 
 import java.io.IOException;
 
-public class TestNGListeners implements ITestListener, IExecutionListener, IAlterSuiteListener {
+public class TestNGListeners implements ITestListener, IExecutionListener, ISuiteListener, IInvokedMethodListener {
     private static final String CONFIG_FILE_PATH = "src/main/resources/allure.properties";
     private final ConfigPropReader configPropReader;
 
@@ -42,5 +41,14 @@ public class TestNGListeners implements ITestListener, IExecutionListener, IAlte
         System.out.println("********************* End of Execution *********************");
     }
 
+    public void afterInvocation(InvokedMethod invokedMethod, ITestResult iTestResult) {
+        if(iTestResult.getStatus() == ITestResult.FAILURE){
+            System.out.println("Failed Test: " + iTestResult.getName());
+        }
+        if (invokedMethod.isTestMethod()){
+            ValidationUtility.assertAll();
+        }
+
+    }
 
 }

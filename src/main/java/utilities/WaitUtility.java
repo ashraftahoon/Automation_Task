@@ -1,6 +1,7 @@
 package utilities;
 
 import configReader.ConfigPropReader;
+import drivers.DriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -22,8 +23,8 @@ public class WaitUtility {
     private final int defaultPageLoadTimeout;
 
     // Constructor that accepts WebDriver instance
-    public WaitUtility(WebDriver driver) {
-        this.driver = driver;
+    public WaitUtility() {
+        this.driver = DriverManager.getDriver();
         this.configPropReader = new ConfigPropReader(CONFIG_FILE_PATH);
         this.defaultExplicitWait = getConfigPropertyAsInt("explicitWait", 15); // Default timeout: 15 seconds
         this.defaultPageLoadTimeout = getConfigPropertyAsInt("pageLoadTimeout", 30); // Default timeout: 30 seconds

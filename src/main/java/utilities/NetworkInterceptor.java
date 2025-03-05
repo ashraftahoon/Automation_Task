@@ -1,6 +1,7 @@
 package utilities;
 
 import com.google.gson.JsonObject;
+import drivers.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
@@ -20,8 +21,8 @@ public class NetworkInterceptor {
     public WebDriver driver;
     public DevTools devTools;
 
-    public NetworkInterceptor(WebDriver driver,String specificUrl) {
-        this.driver = driver;
+    public NetworkInterceptor(String specificUrl) {
+        this.driver = DriverManager.getDriver();
         initializeDevTools();
     }
 

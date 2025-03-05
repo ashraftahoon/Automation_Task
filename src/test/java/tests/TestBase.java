@@ -20,13 +20,13 @@ public class TestBase {
     public void setUp() {
 
         driver = DriverManager.createInstance();
-        browserActions = new BrowserActions(driver);
+        browserActions = new BrowserActions();
         configPropReader = new ConfigPropReader("src/main/resources/config.properties");
         String url = configPropReader.getProperty("baseUrl");
         browserActions.navigateToURL(url);
         browserActions.maximizeWindow();
-        scrolling= new Scrolling(driver);
-        elementActions = new ElementActions(driver);
+        scrolling= new Scrolling();
+        elementActions = new ElementActions();
         JsonDataReader testdata = new JsonDataReader("test-data");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));  // waits 10 seconds for elements to be present
         elementActions.typeText(By.name("username"), testdata.getJsonData("login-credentials.username"));
