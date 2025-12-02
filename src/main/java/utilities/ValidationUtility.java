@@ -63,6 +63,12 @@ public class ValidationUtility {
         softAssert.assertTrue(element.isDisplayed(), message);
     }
 
+    // Soft assert for boolean condition
+    public static void softAssertTrue(boolean condition, String message) {
+        logger.info("Soft Assertion: {}", message);
+        softAssert.assertTrue(condition, message);
+    }
+
     ///////////////////////////////////////////////////
     // Common Validations (Return boolean for flexibility)
     ///////////////////////////////////////////////////

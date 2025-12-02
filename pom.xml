@@ -3,15 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Qeema-Selenium-Framework</artifactId>
+    <artifactId>Selenium-Framework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>seleniumframework</name>
+    <name>Selenium-Framework-Task</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <aspectj.version>1.9.20.1</aspectj.version>
         <allure.version>2.24.0</allure.version>
         <slf4j.version>2.0.0</slf4j.version>
@@ -24,6 +26,7 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <allure.maven.plugin.version>2.12.0</allure.maven.plugin.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>
@@ -32,6 +35,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
         </dependency>
 
         <!-- TestNG -->
@@ -48,10 +56,15 @@
             <version>${allure.version}</version>
         </dependency>
 
+        <!-- AspectJ for Allure attachments (MISSING IN YOUR POM) -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
-
-
-
+        <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -62,12 +75,12 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <!-- Log4j2 API -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
         <!-- JSON Libraries -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -84,6 +97,7 @@
             <artifactId>json-path</artifactId>
             <version>2.7.0</version>
         </dependency>
+
         <!-- RestAssured for API Testing -->
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -105,7 +119,7 @@
     </dependencies>
 
     <build>
-        <directory>test-outputs/target</directory>
+        <directory>test-outputs</directory>
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>
@@ -113,19 +127,23 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
+            <!-- Maven Surefire Plugin (UPDATED) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -133,10 +151,19 @@
                         </property>
                     </properties>
                 </configuration>
+            </plugin>
 
+            <!-- Allure Maven Plugin (MISSING IN YOUR POM) -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven.plugin.version}</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
-
 </project>
