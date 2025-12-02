@@ -26,7 +26,7 @@ public class BrowserActions {
 
     //  Maximize the browser window
     public void maximizeWindow() {
-        logger.info("Maximizing browser window.");
+        logger.info("Maximizing browser window");
         driver.manage().window().maximize();
         logger.debug("Browser window maximized.");
     }

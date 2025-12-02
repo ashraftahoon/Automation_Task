@@ -27,7 +27,6 @@ public class JsonDataReader {
         JSONObject jsonData= (JSONObject) obj;
 //        JSONObject messages = (JSONObject) jsonData.get("messages");
 //
-//        // get messages
 //        expectedSuccessLogin =  (String) messages.get("expectedSuccessLoginMessage");
 
 

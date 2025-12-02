@@ -56,7 +56,7 @@ public class ValidationUtility {
     }
 
     /**
-     * Soft Assertion: Collects failure if element is not displayed.
+     * Soft Assertion: Collects failure if elements is not displayed.
      */
     public static void softAssertElementDisplayed(WebElement element, String message) {
         logger.info("Soft Assertion: Validating if element is displayed.");

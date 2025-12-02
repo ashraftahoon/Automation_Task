@@ -13,7 +13,7 @@ public class Scrolling {
         this.driver = DriverManager.getDriver();
     }
 
-    // Scroll to the bottom of the page
+    // Scroll to the bottom of the page10
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }

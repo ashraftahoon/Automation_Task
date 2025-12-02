@@ -38,7 +38,7 @@ public class NetworkInterceptor {
         devTools.addListener(Network.requestWillBeSent(), rq -> {
             Request request = rq.getRequest();
 
-            // Print intercepted request URL and method
+            // Print intercepted request URL , method
             System.out.println("Intercepted URL: " + request.getUrl());
             System.out.println("Intercepted method: " + request.getMethod());
 

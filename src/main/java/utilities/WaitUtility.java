@@ -22,7 +22,7 @@ public class WaitUtility {
     private final int defaultExplicitWait;
     private final int defaultPageLoadTimeout;
 
-    // Constructor that accepts WebDriver instance
+    // Constructor that accepts WebDriver instance1
     public WaitUtility() {
         this.driver = DriverManager.getDriver();
         this.configPropReader = new ConfigPropReader(CONFIG_FILE_PATH);

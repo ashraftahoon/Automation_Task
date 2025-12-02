@@ -8,7 +8,7 @@ public class ConfigPropReader {
     private final Properties properties;
 
     public  ConfigPropReader(String filePath) {
-        // initialize properties object
+        // initialize properties object1
         properties = new Properties();
         try {
             // create file input stream to read properties from the file

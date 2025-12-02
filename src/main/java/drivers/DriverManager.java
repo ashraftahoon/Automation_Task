@@ -22,7 +22,7 @@ public class DriverManager {
             return getDriver();
         } catch (Exception e) {
             logger.error("Error creating WebDriver instance: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to create WebDriver instance", e);
+            throw new RuntimeException("Failed to create WebDriver instance1", e);
         }
     }
 

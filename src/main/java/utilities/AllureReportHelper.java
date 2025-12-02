@@ -12,7 +12,7 @@ public class AllureReportHelper {
     private static final String ALLURE_RESULTS_DIR = "test-outputs/allure-results";
 
     private AllureReportHelper() {
-        // Private constructor to prevent instantiation
+        // Private constructor to prevent instantiation0
     }
 
     /**

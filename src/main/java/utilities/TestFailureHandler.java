@@ -45,7 +45,7 @@ public class TestFailureHandler implements ITestListener {
     /**
      * Captures an ARIA snapshot of the page elements with ARIA attributes.
      *
-     * @return ARIA snapshot as a JSON string.
+
      */
     private String getAriasnapshot() {
         try {

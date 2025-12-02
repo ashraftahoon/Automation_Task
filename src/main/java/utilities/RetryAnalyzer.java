@@ -13,7 +13,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
     private final int maxRetryCount;
     private final boolean retryFailedTests;
 
-    // Constructor to initialize the RetryAnalyzer
+    // Constructor to initialize the RetryAnalyzer1
     public RetryAnalyzer() {
         // Read configuration properties
         ConfigPropReader configPropReader = new ConfigPropReader("src/main/resources/config.properties");

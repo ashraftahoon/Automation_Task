@@ -19,7 +19,7 @@ public class BrowserFactory {
     private static final Logger logger = LoggerFactory.getLogger(BrowserFactory.class);
 
     private BrowserFactory() {
-        // Private constructor to prevent instantiation
+        // Private 0constructor to prevent instantiation
     }
 
     public static WebDriver getDriver() {

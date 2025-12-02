@@ -21,7 +21,7 @@ public class ElementActions {
     public ElementActions() {
         this.driver = DriverManager.getDriver();
         this.waitUtility = new WaitUtility(); // Create instance inside the class
-        this.scrolling = new Scrolling();     // Create instance inside the class
+        this.scrolling = new Scrolling();
     }
 
     // Click on an element using its locator
